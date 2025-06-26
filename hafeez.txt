@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hafeez Birthday Book - 6 Pages</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background: #f9f4f7;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+      user-select: none;
+      flex-direction: column;
+    }
+    .book-container {
+      width: 700px;
+      max-width: 100%;
+      height: 470px;
+      perspective: 2000px;
+      position: relative;
+      border-radius: 16px;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.15);
+      background: #fff;
+      overflow: hidden;
+    }
+    .book {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.8s ease-in-out;
+      border-radius: 16px;
+    }
+    .page {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      padding: 30px 40px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+      color: #7b1fa2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      backface-visibility: hidden;
+      overflow-y: auto;
+    }
+    .page h1 {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+      letter-spacing: 1.3px;
+    }
+    .page h2 {
+      font-size: 1.6rem;
+      margin: 0 0 20px 0;
+      font-weight: 600;
+    }
+    .page p {
+      font-size: 1.15rem;
+      line-height: 1.5;
+      color: #4a148c;
+      margin-bottom: 20px;
+      text-align: center;
+      max-width: 600px;
+    }
+    .emoji {
+      font-size: 3rem;
+      margin-bottom: 25px;
+    }
+    .images-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      width: max-content;
+      max-width: 620px;
+      margin: 0 auto 25px;
+    }
+    .images-grid img {
+      width: 100%;
+      max-width: 180px;
+      aspect-ratio: 1 / 1;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+    .images-grid img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+    .navigation {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      user-select: none;
+    }
+    button {
+      background: #7b1fa2;
+      border: none;
+      color: white;
+      padding: 10px 25px;
+      margin: 10px;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 4px 10px rgba(123,31,162,0.4);
+    }
+    button:hover {
+      background-color: #4a148c;
+    }
+    @media (max-width: 720px) {
+      .images-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 400px;
+      }
+      .images-grid img {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Play Music Button -->
+  <button onclick="playMusic()">This Is Song For You</button>
+  <!-- Hidden iframe for YouTube music -->
+  <iframe
+    id="ytplayer"
+    type="text/html"
+    width="0"
+    height="0"
+    frameborder="0"
+    allow="autoplay"
+    allowfullscreen
+  ></iframe>
+
+  <div class="book-container" aria-label="Birthday Card Book">
+    <div id="book" class="book" aria-live="polite" aria-atomic="true" aria-relevant="additions removals">
+      <!-- Pages will be injected here -->
+    </div>
+    <div class="navigation" role="navigation" aria-label="Page navigation">
+      <button id="prevBtn" aria-label="Previous page">Prev</button>
+      <button id="nextBtn" aria-label="Next page">Next</button>
+    </div>
+  </div>
+
+  <script>
+    function playMusic() {
+      const player = document.getElementById("ytplayer");
+      player.src = "https://www.youtube.com/embed/jqR1jBhTNnQ?autoplay=1&loop=1&playlist=jqR1jBhTNnQ";
+    }
+
+    const pagesData = [
+      {
+        emoji: '🎉🎂🎈',
+        title: 'Happy Birthday',
+        subtitle: 'Hafeez',
+        message: `Celebrate the special day with joy, love, and laughter.<br>Here's to a wonderful year filled with amazing moments and memories.`,
+        images: ['images/hafeez.jpg'],
+        bgGradient: 'linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%)',
+        color: '#7b1fa2'
+      },
+      {
+        emoji: '🎁💖✨',
+        title: 'Dear Hafeez,',
+        subtitle: 'Best Wishes',
+        message: `May your days be filled with sunshine,<br>your nights with peaceful dreams,<br>and your year with countless blessings.<br>Happy Birthday! 🎂🎉`,
+        images: ['images/honey.jpg'],
+        bgGradient: 'linear-gradient(135deg, #ede7f6 0%, #b39ddb 100%)',
+        color: '#311b92'
+      },
+      {
+        emoji: '🌟🎉🎊',
+        title: 'Cheers to You!',
+        subtitle: 'Hafeez',
+        message: `Wishing you success, happiness,<br>and endless reasons to smile.<br>Enjoy every moment!`,
+        images: ['images/hon.jpg'],
+        bgGradient: 'linear-gradient(135deg, #e1bee7 0%, #ce93d8 100%)',
+        color: '#6a1b9a'
+      },
+      {
+        emoji: '🎂🎈🎀',
+        title: 'Make a Wish',
+        subtitle: 'Hafeez',
+        message: `Blow out the candles and make<br>your dreams come true.<br>Here’s to a fantastic year ahead!`,
+        images: ['images/cute.jpg'],
+        bgGradient: 'linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%)',
+        color: '#8e24aa'
+      },
+      {
+        emoji: '🎉🎁💖',
+        title: 'With Love',
+        subtitle: 'Hafeez',
+        message: `Sending warm wishes and hugs.<br>May your birthday be as wonderful<br>as you are!`,
+        images: ['images/hom.jpg'],
+        bgGradient: 'linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%)',
+        color: '#9c27b0'
+      },
+      {
+        emoji: '📅🎂🎉',
+        title: 'Important Date',
+        subtitle: '26 June 2001',
+        message: `This special day marks the beginning of an amazing journey!<br>Remember and celebrate every moment.`,
+        images: [],
+        bgGradient: 'linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%)',
+        color: '#7b1fa2'
+      }
+    ];
+
+    const book = document.getElementById('book');
+    let currentPage = 0;
+
+    function renderPages() {
+      book.innerHTML = '';
+      pagesData.forEach((page, index) => {
+        const pageDiv = document.createElement('div');
+        pageDiv.classList.add('page');
+        pageDiv.style.background = page.bgGradient;
+        pageDiv.style.color = page.color;
+        pageDiv.style.transform = `translateX(${(index - currentPage) * 100}%)`;
+        pageDiv.setAttribute('aria-hidden', index !== currentPage);
+        pageDiv.setAttribute('role', 'group');
+        pageDiv.setAttribute('aria-label', `Page ${index + 1} of ${pagesData.length}`);
+        pageDiv.innerHTML = `
+          <div class="emoji">${page.emoji}</div>
+          <h1>${page.title}</h1>
+          <h2>${page.subtitle}</h2>
+          <p>${page.message}</p>
+          <div class="images-grid">
+            ${page.images.map(src => `<img src="${src}" alt="Image" />`).join('')}
+          </div>
+        `;
+        book.appendChild(pageDiv);
+      });
+    }
+
+    function goToPage(page) {
+      if (page < 0) page = pagesData.length - 1;
+      else if (page >= pagesData.length) page = 0;
+      currentPage = page;
+      updatePages();
+    }
+
+    function updatePages() {
+      const pages = book.querySelectorAll('.page');
+      pages.forEach((pageDiv, i) => {
+        const offset = (i - currentPage) * 100;
+        pageDiv.style.transform = `translateX(${offset}%)`;
+        pageDiv.setAttribute('aria-hidden', i !== currentPage);
+      });
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+      goToPage(currentPage - 1);
+    });
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      goToPage(currentPage + 1);
+    });
+
+    renderPages();
+  </script>
+</body>
+</html>
